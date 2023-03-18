@@ -43,12 +43,12 @@
 // //                    + calculator.div(x, y)); 
 
 //------------------------------------------------------
-import mul from './calc.js'; 
-    
-var x = 50, y = 10; 
-    
-console.log("multiplication of 50 and 10 is: "
-                   + mul(x, y)); 
+    // import mul from './calc.js'; 
+        
+    // var x = 50, y = 10; 
+        
+    // console.log("multiplication of 50 and 10 is: "
+    //                    + mul(x, y)); 
 
 
 //-----------------------------------
@@ -81,3 +81,114 @@ console.log("multiplication of 50 and 10 is: "
 //   console.log(data);
 // });
 //--------------------------------------------------
+//--------------------------------------------------
+// We can use express as shown as below
+const express = require('express')
+const app = express()
+const port = 3000;
+
+var users = [
+            {
+            "name":"karthik",
+            "age":"27"
+            },
+            {
+            "name":"arun",
+            "age":"37"
+            },
+            {
+            "name":"ram",
+            "age":"87"
+            }];
+app.get('/users/:id', (req, res) => {
+    console.log(req.params.id);
+  res.send(req.params.id)
+})
+app.get('/posts/:id',(req,res)=>{
+console.log(req.params.id)
+res.send(req.params.id)
+
+});
+
+app.get('/status',(req,res)=>{
+    res.sendStatus(404);
+});
+
+app.get('/test(.html)?',(req,res)=>{
+// optional params
+    res.sendFile('test.html',{root:__dirname});
+});
+app.get('/test',(req,res)=>{
+    // res.sendStatus(404);
+    // res.send('hiiiii');
+    res.sendFile('test.html',{root:__dirname});
+
+});
+
+app.get('/demo',(req,res)=>{
+    // res.sendStatus(404);
+   res.redirect('./hello');
+
+});
+
+app.get('/hello',(req,res)=>{
+    res.sendFile('./node.html',{root:__dirname})
+});
+
+
+
+
+// app.get('/middleware',(req,res,next)=>{
+//     var a = 1;
+// console.log('a::'+a);
+// next();
+// },(req,res,next)=>{
+//     var c = 67;
+// console.log('c::'+c);
+// next();
+// },(req,res,next)=>{
+//     var b = 3;
+// console.log('b::'+b);
+// res.sendFile('./node.html',{root:__dirname})
+
+// });
+
+var a = (req,res,next)=>{
+    var a = 1;
+console.log('a::'+a);
+next();
+};
+var c = (req,res,next)=>{
+    var c = 567;
+    req.c = c;
+console.log('c::'+c);
+return next();
+console.log('sfdssdfsd::');
+
+}
+var b = (req,res,next)=>{
+    var a = req.c+1;
+    console.log('req::'+req);
+
+console.log('a::'+a);
+res.sendFile('./node.html',{root:__dirname})
+}
+app.get('/middleware',[a,c,b]);
+
+app.get('/*',(req,res)=>{
+    res.sendFile('nopage.html',{root:__dirname})
+});
+
+
+
+
+
+
+
+
+
+
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
