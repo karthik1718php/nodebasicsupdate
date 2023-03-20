@@ -179,16 +179,6 @@ app.get('/*',(req,res)=>{
     res.sendFile('nopage.html',{root:__dirname})
 });
 
-
-
-
-
-
-
-
-
-
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
